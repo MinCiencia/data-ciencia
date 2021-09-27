@@ -1,8 +1,7 @@
 <template>
 <div>
-  <div style="width: 100%; height: 500px; background-size: cover; background-position:center; background-image: url('https://www.minciencia.gob.cl/uploads/filer_public_thumbnails/filer_public/23/27/23270f20-e863-495d-b376-a165566df2c0/whatsapp_image_2021-08-12_at_42325_pm_1.jpeg__1280x854_q85_subsampling-2.jpg')"> 
-    <p>  Bienvenido al Observatorio de Cambio Climático</p>
-  
+  <div  class="home-header" style="width: 100%; height: 250px; background-size: cover; background-position:center; background-image: url('https://www.minciencia.gob.cl/uploads/filer_public_thumbnails/filer_public/23/27/23270f20-e863-495d-b376-a165566df2c0/whatsapp_image_2021-08-12_at_42325_pm_1.jpeg__1280x854_q85_subsampling-2.jpg')"> 
+    <p style="color: white; font-weight: 500; font-size: 30px;">  Bienvenido a Data Ciencia </p>
   </div>
   <div class="content-home" >
     <v-overlay :value="loading">
@@ -12,7 +11,23 @@
           ></v-progress-circular>
         </v-overlay>
       <div class="banner"> 
-        <h1>Datasets </h1>
+        <h1 style="color: #000099">Destacado </h1>
+        <br>
+        <br>
+        <v-row>
+          <v-col></v-col>
+          <v-col>
+            <button type="button" class="botonera" style=" background: #000099; color: white; 
+          "> Datos COVID </button>
+          </v-col>
+          <v-col>
+            <button type="button" class="botonera" style=" color: #000099
+          "> Datos Cambio Climatico </button>
+          </v-col>
+          <v-col></v-col>
+      </v-row>
+      <br>
+        <h1 style="color: #000099">Datasets </h1>
         <br>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore fuga explicabo maxime illum! Tempora aspernatur tempore nisi iusto officiis dolorem aperiam ex saepe neque incidunt itaque consectetur, quisquam aliquam expedita?
         <br>
@@ -21,7 +36,7 @@
            <v-text-field
             outlined
             label="Buscar dataset"
-            prepend-inner-icon="mdi-magnify" style="background: white"
+            prepend-inner-icon="mdi-magnify" style="background: white; color: #000099 "
             v-model="busqueda"
           ></v-text-field>
           <br>
@@ -29,17 +44,17 @@
             <v-chip
               class="ma-2"
             >
-              Ciclo de carbono
+              Covid
             </v-chip>
             <v-chip
               class="ma-2"
             >
-              Ciclo del agua
+              Contaminación
             </v-chip>
             <v-chip
               class="ma-2"
             >
-              Océanos
+              Tecnología
             </v-chip>
             <v-chip
               class="ma-2"
@@ -72,8 +87,7 @@
             :total-visible="6"
           ></v-pagination>
       </div>
-      <br>
-      <br>
+     
     
     </div>
   </div>
@@ -233,4 +247,34 @@ export default {
 
 .embed-container {position: relative; padding-bottom: 40%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}
 
+.botonera{
+  background-color: #fff;
+              border-radius: 10px;
+              -webkit-box-shadow: 0 2px 4px 0 #bbbbbb;
+              box-shadow: 0 2px 4px 0 #bbbbbb;
+              display: inline-block;
+              font-size: 1em;
+              line-height: 1.25em;
+              padding: 5px;
+              position: relative;
+              -webkit-transition: all .2s ease-in-out;
+              transition: all .2s ease-in-out;
+              width: 10px;
+              width: 100%;
+              height: 100px;
+}
+
+.home-header {
+  min-height: 200px;
+  background: #E6E6E6;
+  border-radius: 5px;
+  background-size: cover;
+
+  text-align: center;
+  padding: 0 20px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
 </style>

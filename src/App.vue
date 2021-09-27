@@ -8,7 +8,7 @@
             cols="12"
             style="color: white"
           >
-            {{ new Date().getFullYear() }} — <strong>Observatorio de Cambio Climático</strong>
+            {{ new Date().getFullYear() }} — <strong>Data Ciencia</strong>
           </v-col>
     </v-footer>
   </div>

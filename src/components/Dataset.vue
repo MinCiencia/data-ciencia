@@ -206,7 +206,7 @@
           <p style="color: white; font-size: 25px;"> {{ nombre }}</p>
           </div>
           <div class="dataset-body"> 
-            <v-tabs color="#5f9da0" v-model="tab" >
+            <v-tabs color="#000099" v-model="tab" >
               <v-tab href="#tab-1">Descripción</v-tab>
               <v-tab href="#tab-2">Descarga</v-tab>
               <!-- <v-tab href="#tab-3">Historia</v-tab> -->
@@ -337,10 +337,7 @@
                                           <p style="margin: 0"> <v-icon  small> mdi-card-account-details </v-icon><b> Autor:</b> </p> 
                                           {{ table_autor }} 
                                       </v-col>
-                                      <v-col>
-                                          <p style="margin: 0"> <v-icon  small> mdi-script-text </v-icon><b> Licencia:</b> </p> 
-                                          {{ table_licencia }} 
-                                      </v-col>
+                                     
                                       <v-col> 
                                           <p style="margin: 0"> <v-icon  small> mdi-calendar-range </v-icon><b> Última actualización </b> </p> 
                                            {{ table_last_index }}
@@ -493,7 +490,7 @@
                         <div> <b>Descargar</b> </div>
                           <v-btn
                                   elevation="2"
-                                  color="#5e9ca0"
+                                  color="#000099"
                                   style="color: white"
                                   v-on:click="descargarConsolidado">
                                     Consolidado
@@ -883,11 +880,10 @@ export default {
   padding: 0px 200px 0px 200px;
   min-height: 400px;
     /*background: #d9d9d926;*/
-    background: #d9d9d9bf;
 
 }
 .dataset-header {
-  min-height: 300px;
+  min-height: 200px;
   background: #E6E6E6;
   border-radius: 5px;
   background-size: cover;
@@ -905,6 +901,13 @@ export default {
   padding-right: 20px;
   min-height: 200px;
   background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 8%);
+  background: #fff;
+  /* padding: 50px; */
+  border: 10px;
+  border-radius: 10px;
+  border-color: #563636;
 }
 .main-content {
   min-height: 300px;
