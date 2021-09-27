@@ -1,4 +1,45 @@
-# Data-Ciencia
-Entrada al laboratorio, biblioteca o museo digital de datos impulsado por el Ministerio de Ciencia de Chile. Aquí encontrarás todo lo que necesitas para ayudarte a definir tus preguntas y construir respuestas en base a evidencia disponible.
+# Dataplatform
+Visualización y descubrimiento de datasets. El presente repositorio es la capa de presentación para la visualización de los conjuntos de datos.
 
-Comenzamos esta iniciativa con información relativa al cambio climático, la pandemia causada por Sars-CoV-2 e indicadores de las políticas públicas en el ámbito de ciencia y tecnología en Chile, siéntete en libertad de solicitar información sobre otras áreas o disciplinas y estamos trabajando para disponer en formatos y medios adecuados todo lo que las personas requieran.
+
+## Componentes
+1. Home
+
+- Caracteristicas
+```json
+{
+        "cards": [
+          {
+            "titulo": "str",
+            "descripcion": "str",
+            "url": "str"
+          }
+        ]
+}
+```
+2. Datasets
+
+- Caracteristicas:
+```json
+{
+        "nombre": "str",
+        "descripcion": "str",
+        "fuente": "str",
+        "autor": "str",
+        "licencia": "str",
+        "imagen": "str",
+        "last_update": "int",
+        "last_dataset": "str",
+        "history": [
+            {
+                "date": "int",
+                "name": "str",
+                "path": "str"
+            }
+        ],
+        "headers": [{}],
+        "dataTable": [{}],
+}
+```
+
+
