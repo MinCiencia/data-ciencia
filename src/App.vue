@@ -8,7 +8,7 @@
             cols="12"
             style="color: white"
           >
-            {{ new Date().getFullYear() }} — <strong>Observatorio de Cambio Climático</strong>
+            {{ new Date().getFullYear() }} — Data <strong>Ciencia </strong>
             <br>
             Ministerio de Ciencia, Tecnología, Conocimiento e Innovación
           </v-col>

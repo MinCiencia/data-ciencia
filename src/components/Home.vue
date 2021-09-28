@@ -1,7 +1,5 @@
 <template>
 <div>
-  
-
     <v-overlay :value="dialog_visualizacion"></v-overlay>
      <v-dialog 
       v-model="dialog_visualizacion" >
@@ -73,31 +71,45 @@
           ></v-progress-circular>
         </v-overlay>
       <v-row> 
-        <v-col cols="2" style="background: white;">
-          <div>
-          <v-list dense>
-              <v-subheader>CATEGORÍAS</v-subheader>
-              <v-list-item-group
-                v-model="section"
-                color="primary"
+        <v-col class="panel-izq" cols="2" style="background: white;">
+          <div >
+           <v-navigation-drawer 
+            permanent >
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6">
+            Categorias
+          </v-list-item-title>
+          <v-list-item-subtitle>
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+              <v-list
+                dense
+                nav
               >
                 <v-list-item
-                  v-for="(item, i) in items"
-                  :key="i"
+                  v-for="item in items"
+                  :key="item.title"
+                  link
                 >
                   <v-list-item-icon>
-                    <v-icon v-text="item.icon"></v-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
                   </v-list-item-icon>
+
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                    <v-list-item-title>{{ item.text }}</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
-              </v-list-item-group>
-            </v-list>  
+              </v-list>
+            </v-navigation-drawer>
             </div>
         
         </v-col>
-        <v-col cols="10" style="background: white">
+        <v-col cols="10" class="panel-der" style="background: white">
       <div class="banner"> 
 
         <h1>Datasets </h1>
@@ -277,10 +289,17 @@ export default {
   .content {
     padding: 0px 30px 0px 30px;
   }
+  .panel-izq{
+    display: none;
+  }
+  .panel-der{
+    max-width: unset;
+    min-width: 100%;
+  }
 }
 
 .banner {
-  min-height: 300px;
+  min-height: 315px;
   border-radius: 5px;
   text-align: left;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;

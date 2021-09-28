@@ -653,10 +653,10 @@ export default {
         try {
           commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1) )).data
         } catch (error) {
+          this.loading = false
           console.log(error)
           commit = {}
         } finally {
-          console.log(commit[0].commit)
           this.table_last_index = commit[0].commit.committer.date
           this.loading = false
         }
@@ -727,25 +727,22 @@ export default {
           this.last_dataset = result.last_dataset
           this.index_time = result.index_time
           
-          this.loading = false
-          this.loading = true
+      
           this.table_url = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].url
           this.table_description = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].descripcion
-          this.loading = true
           let commit;
-          console.log(this.table_url)
           console.log(this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1))
           try {
             commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1) )).data
           } catch (error) {
-            console.log(error)
+            this.loading = false
             commit = {}
           } finally {
-            console.log(commit[0].commit)
+            this.loading = false
             this.table_last_index = commit[0].commit.committer.date
             this.index_time = commit[0].commit.committer.date
-            this.loading = false
-          }
+            
+           }
           }
       },
       getGraphs: async function () {
