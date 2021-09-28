@@ -144,6 +144,7 @@
             <v-spacer></v-spacer>
           </v-col>             
           </v-row>
+          <br>
           <v-pagination
             color="#1966c0"
             v-model="pagina"

@@ -648,10 +648,8 @@ export default {
         this.table_description = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].descripcion
         this.loading = true
         let commit;
-        console.log(this.table_url)
-        console.log(this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1))
         try {
-          commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1) )).data
+          commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/")[this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").length - 1] )).data
         } catch (error) {
           this.loading = false
           console.log(error)
@@ -731,9 +729,8 @@ export default {
           this.table_url = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].url
           this.table_description = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].descripcion
           let commit;
-          console.log(this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1))
           try {
-            commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1) )).data
+            commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/")[this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").length - 1] )).data
           } catch (error) {
             this.loading = false
             commit = {}
@@ -787,7 +784,7 @@ export default {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
             fileLink.href = fileURL;
-            fileLink.setAttribute('download', this.table_url.split("/").at(-1));
+            fileLink.setAttribute('download', this.table_url.split("/")[this.table_url.split("/").length - 1]);
             document.body.appendChild(fileLink);
             fileLink.click();
         }).catch(error =>{
