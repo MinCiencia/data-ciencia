@@ -206,7 +206,7 @@
           <p style="color: white; font-size: 25px;"> {{ nombre }}</p>
           </div>
           <div class="dataset-body"> 
-            <v-tabs color="#000099" v-model="tab" >
+            <v-tabs color="#5f9da0" v-model="tab" >
               <v-tab href="#tab-1">Descripción</v-tab>
               <v-tab href="#tab-2">Descarga</v-tab>
               <!-- <v-tab href="#tab-3">Historia</v-tab> -->
@@ -335,9 +335,9 @@
                                   <v-row>
                                       <v-col> 
                                           <p style="margin: 0"> <v-icon  small> mdi-card-account-details </v-icon><b> Autor:</b> </p> 
-                                          {{ table_autor }} 
+                                          {{ autor }} 
                                       </v-col>
-                                     
+                                      
                                       <v-col> 
                                           <p style="margin: 0"> <v-icon  small> mdi-calendar-range </v-icon><b> Última actualización </b> </p> 
                                            {{ table_last_index }}
@@ -372,7 +372,7 @@
                                         </v-list-item>
                                       </v-list-group>
                                     </v-list> -->
-                                    
+                                    <!--
                                     <v-icon  small> mdi-table-large </v-icon><b> Previsualizacion:</b>
                                     <v-data-table
                                             :key="selectElement"
@@ -383,7 +383,7 @@
                                             dense
                                             hide-default-footer>
                                     </v-data-table>  
-                                    <br>
+                                    <br> -->
                                            
                                 </div>
                                <!-- <v-btn
@@ -400,7 +400,7 @@
                                   outlined
                                   color="#000000"
                                   style="margin-left: 10px"
-                                  v-on:click="dialog_filter = true">
+                                  v-on:click="descargarDataset">
                                     Descargar tabla
                                 </v-btn> 
                             </div>
@@ -487,18 +487,9 @@
                         cols="12"
                         sm="4" >
                         <div class="right-panel">
-                        <div> <b>Descargar</b> </div>
-                          <v-btn
-                                  elevation="2"
-                                  color="#000099"
-                                  style="color: white"
-                                  v-on:click="descargarConsolidado">
-                                    Consolidado
-                          </v-btn>  
-                          <br>
+                        
                         <!-- <div class="boton-descarga" v-on:click="dialog_pandas = true">  pandas </div> -->
 
-                          <br>
                           <b>Autor</b>
                           <br>
                           <v-avatar size="48"> 
@@ -653,43 +644,21 @@ export default {
     },
     watch:{
       selectElement: async function(){
+        this.table_url = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].url
+        this.table_description = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].descripcion
         this.loading = true
-        let tables;
+        let commit;
+        console.log(this.table_url)
+        console.log(this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1))
         try {
-          tables = (await this.axios.get(process.env.VUE_APP_WEB_SERVER + "/tables/" + this.selectElement  )).data
+          commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1) )).data
         } catch (error) {
           console.log(error)
-          tables = {}
+          commit = {}
         } finally {
-          this.headers = tables.preview ? tables.preview.columns : []
-          this.preview = tables.preview ? tables.preview :  { data: [], schema: { fields: [] } } 
-          
-          if(this.preview.schema){
-            this.preview.schema.fields.forEach(element => {
-              element['value'] = element['name']
-              element['text'] = element['name']
-            })
-          }
-          this.table_last_index = tables.index_time
-          this.table_autor = tables.autor
-          this.table_description = tables.description
-
+          console.log(commit[0].commit)
+          this.table_last_index = commit[0].commit.committer.date
           this.loading = false
-          /*let graphs;
-          this.loading_graphs = true
-
-          try {
-            graphs = (await this.axios.get(process.env.VUE_APP_WEB_SERVER + "/graphs/" + this.selectElement  )).data
-          } catch (error) {
-            console.log(error)
-            graphs = {}
-          } finally {
-            this.graphs = graphs
-            delete this.graphs.id 
-            this.loading = false
-            this.loading_graphs = false
-          } */
-
         }
       },
       dialog_filter: function(){
@@ -760,24 +729,24 @@ export default {
           
           this.loading = false
           this.loading = true
-          let tables;
+          this.table_url = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].url
+          this.table_description = this.tablas.filter(tabla => tabla.name == this.selectElement)[0].descripcion
+          this.loading = true
+          let commit;
+          console.log(this.table_url)
+          console.log(this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1))
           try {
-            tables = (await this.axios.get(process.env.VUE_APP_WEB_SERVER + "/tables/" + this.selectElement  )).data
+            commit = (await this.axios.get("https://api.github.com/repos/MinCiencia/Datos-COVID19/commits?path="+ this.table_url.split("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/").at(-1) )).data
           } catch (error) {
-            tables = {}
-            this.loading = false
+            console.log(error)
+            commit = {}
           } finally {
-            this.preview = tables.preview ? tables.preview : { data: [], schema: { fields: [] } } 
-            this.headers = tables.preview ? tables.preview.columns : []
-            if(this.preview){
-                this.preview.schema.fields.forEach(element => {
-                  element['value'] = element['name']
-                  element['text'] = element['name']
-                })
-            }
+            console.log(commit[0].commit)
+            this.table_last_index = commit[0].commit.committer.date
+            this.index_time = commit[0].commit.committer.date
             this.loading = false
           }
-        }
+          }
       },
       getGraphs: async function () {
         this.loading_graphs = true
@@ -810,9 +779,8 @@ export default {
       descargarDataset(){
         this.error = false
         this.loading = true
-        console.log(this.datetime_start)
-        console.log(this.datetime_end)
-        this.axios.get(process.env.VUE_APP_WEB_SERVER + "/generation/" + this.selectElement , { params: {
+        console.log(this.table_url)
+        this.axios.get(this.table_url , { params: {
               startDate:  this.datetime_start ? this.datetime_start.toDateString(): undefined,
               endDate: this.datetime_end ? this.datetime_end.toDateString() : undefined,
               columns: this.columnasaDescargar
@@ -822,7 +790,7 @@ export default {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement('a');
             fileLink.href = fileURL;
-            fileLink.setAttribute('download', this.selectElement + ".csv");
+            fileLink.setAttribute('download', this.table_url.split("/").at(-1));
             document.body.appendChild(fileLink);
             fileLink.click();
         }).catch(error =>{
@@ -880,10 +848,11 @@ export default {
   padding: 0px 200px 0px 200px;
   min-height: 400px;
     /*background: #d9d9d926;*/
+    background: #d9d9d9bf;
 
 }
 .dataset-header {
-  min-height: 200px;
+  min-height: 300px;
   background: #E6E6E6;
   border-radius: 5px;
   background-size: cover;
@@ -901,13 +870,6 @@ export default {
   padding-right: 20px;
   min-height: 200px;
   background: white;
-  border-radius: 5px;
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 8%);
-  background: #fff;
-  /* padding: 50px; */
-  border: 10px;
-  border-radius: 10px;
-  border-color: #563636;
 }
 .main-content {
   min-height: 300px;

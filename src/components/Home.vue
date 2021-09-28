@@ -1,7 +1,69 @@
 <template>
 <div>
-  <div  class="home-header" style="width: 100%; height: 250px; background-size: cover; background-position:center; background-image: url('https://www.minciencia.gob.cl/uploads/filer_public_thumbnails/filer_public/23/27/23270f20-e863-495d-b376-a165566df2c0/whatsapp_image_2021-08-12_at_42325_pm_1.jpeg__1280x854_q85_subsampling-2.jpg')"> 
-    <p style="color: white; font-weight: 500; font-size: 30px;">  Bienvenido a Data Ciencia </p>
+  
+
+    <v-overlay :value="dialog_visualizacion"></v-overlay>
+     <v-dialog 
+      v-model="dialog_visualizacion" >
+      <div style="padding: 10px; background: white; " > 
+        <v-menu
+          bottom
+          left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+            style="float: right; position: relative"
+              v-on:click="dialog_visualizacion = false;"
+              icon
+              v-bind="attrs"
+              v-on="on">
+              <v-icon> mdi-close</v-icon>
+            </v-btn>
+          </template>
+        </v-menu>
+        <br>
+        <div> 
+          <v-row>
+            <v-col>
+              <div class="flourish-embed" data-src="story/995952" :key="dialog_map"></div>
+            </v-col>
+            <v-col>
+              <br>
+              <h2> Titulo visualizacion </h2>
+              <br>
+              <b> Descripcion: </b>
+              <br>
+              Aquí puedes buscar distintas fuentes de datos. Selecciona una para empezar a explorar.
+              <br>
+              <br>
+              <b>Fuente:</b> 
+              <br>
+              Producto 43
+              <br>
+              <br>
+              <b>Última actualización:</b> 
+              <br>
+              Producto 43
+            </v-col>
+          </v-row>
+        </div>
+        <br>
+        
+      </div>
+    </v-dialog>
+
+  <div class="home-header" style="width: 100%; height: 300px; background-size: cover; background-image: url('https://www.minciencia.gob.cl/uploads/filer_public_thumbnails/filer_public/23/27/23270f20-e863-495d-b376-a165566df2c0/whatsapp_image_2021-08-12_at_42325_pm_1.jpeg__1280x854_q85_subsampling-2.jpg')"> 
+    <div>
+    <p>  Bienvenido a <br><span style="font-size: 25px">Datos <b>Ciencia</b></span></p>
+    <br>
+     <v-row >  
+      
+      <v-col>
+        <v-btn v-on:click="dialog_visualizacion= true;"  >
+          Visualizaciones
+        </v-btn>
+      </v-col>
+    </v-row>
+    </div>
   </div>
   <div class="content-home" >
     <v-overlay :value="loading">
@@ -10,71 +72,61 @@
             size="64"
           ></v-progress-circular>
         </v-overlay>
-      <div class="banner"> 
-        <h1 style="color: #000099">Destacado </h1>
-        <br>
-        <br>
-        <v-row>
-          <v-col></v-col>
-          <v-col>
-            <button type="button" class="botonera" style=" background: #000099; color: white; 
-          "> Datos COVID </button>
-          </v-col>
-          <v-col>
-            <button type="button" class="botonera" style=" color: #000099
-          "> Datos Cambio Climatico </button>
-          </v-col>
-          <v-col></v-col>
-      </v-row>
-      <br>
-        <h1 style="color: #000099">Datasets </h1>
-        <br>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore fuga explicabo maxime illum! Tempora aspernatur tempore nisi iusto officiis dolorem aperiam ex saepe neque incidunt itaque consectetur, quisquam aliquam expedita?
-        <br>
-        <br>
+      <v-row> 
+        <v-col cols="2" style="background: white;">
+          <div>
+          <v-list dense>
+              <v-subheader>CATEGORÍAS</v-subheader>
+              <v-list-item-group
+                v-model="section"
+                color="primary"
+              >
+                <v-list-item
+                  v-for="(item, i) in items"
+                  :key="i"
+                >
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>  
+            </div>
         
+        </v-col>
+        <v-col cols="10" style="background: white">
+      <div class="banner"> 
+
+        <h1>Datasets </h1>
+        <br>
+        Aquí puedes buscar distintas fuentes de datos. Selecciona una para empezar a explorar.        <br>
+        <br>
            <v-text-field
             outlined
             label="Buscar dataset"
-            prepend-inner-icon="mdi-magnify" style="background: white; color: #000099 "
+            prepend-inner-icon="mdi-magnify" style="background: white"
             v-model="busqueda"
           ></v-text-field>
           <br>
           <v-row style="margin-left: 10px;">
-            <v-chip
-              class="ma-2"
-            >
-              Covid
-            </v-chip>
-            <v-chip
-              class="ma-2"
-            >
-              Contaminación
-            </v-chip>
-            <v-chip
-              class="ma-2"
-            >
-              Tecnología
-            </v-chip>
-            <v-chip
-              class="ma-2"
-            >
-              Atmósfera
-            </v-chip>
+           
           </v-row>
           <v-row> 
             <v-col v-for="(card) in datasetsHome" :key="card"
               cols="12"
-              sm="4">
+              sm="3">
             <v-card class="mx-auto" >
                 <v-img @click="goDataset(card.name)" style="cursor: pointer; hover:white"
                   :src="card.imagen"
-                  height="200px"> </v-img>
-                <v-card-title @click="goDataset(card.name)" style="word-break: normal; cursor: pointer;">
+                  height="100px"> </v-img>
+                <v-card-title @click="goDataset(card.name)" style="word-break: normal; cursor: pointer; font-size: medium">
                   {{ card.titulo }}
                 </v-card-title>
-                <v-card-subtitle>
-                  {{ card.descripcion.substring(0, 140) + "..."}}
+                <v-card-subtitle v-html="card.descripcion.substring(0, 140)" >
+                 
                 </v-card-subtitle>
             </v-card>
             <v-spacer></v-spacer>
@@ -87,9 +139,14 @@
             :total-visible="6"
           ></v-pagination>
       </div>
-     
-    
+
+      <br>
+      <br>
+    </v-col>
+      </v-row>
     </div>
+    
+    
   </div>
 </template>
 
@@ -165,7 +222,12 @@ export default {
             descripcion: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum corporis vero at! Quasi nobis dignissimos neque quas laboriosam sint ea nihil earum quis aliquam ad veritatis, obcaecati illum vero aspernatur.",
             url: "https://pbs.twimg.com/media/DUUhiKxW0AICECX.jpg"
           } */
-        ]
+        ],
+        items: [
+        { text: 'Inicio', icon: 'mdi-home' }
+      ],
+        section: 0,
+        dialog_visualizacion: false
       }
     },
     computed: {
@@ -205,7 +267,7 @@ export default {
 }
 
 .content-home {
-  padding: 0px 200px 0px 200px;
+  padding: 0px 00px 0px 0px;
   min-height: 400px;
     background: #d9d9d9bd;
 
@@ -223,7 +285,7 @@ export default {
   text-align: left;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     background: white;
-    padding: 50px;
+    padding: 20px;
     border: 10px;
     border-radius: 10px;
     border-color: #563636;
@@ -247,34 +309,14 @@ export default {
 
 .embed-container {position: relative; padding-bottom: 40%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}
 
-.botonera{
-  background-color: #fff;
-              border-radius: 10px;
-              -webkit-box-shadow: 0 2px 4px 0 #bbbbbb;
-              box-shadow: 0 2px 4px 0 #bbbbbb;
-              display: inline-block;
-              font-size: 1em;
-              line-height: 1.25em;
-              padding: 5px;
-              position: relative;
-              -webkit-transition: all .2s ease-in-out;
-              transition: all .2s ease-in-out;
-              width: 10px;
-              width: 100%;
-              height: 100px;
-}
 
-.home-header {
-  min-height: 200px;
-  background: #E6E6E6;
-  border-radius: 5px;
-  background-size: cover;
+.home-header{
 
   text-align: center;
   padding: 0 20px; 
   display: flex;
   justify-content: center;
   align-items: center;
-
+  color: white;
 }
 </style>

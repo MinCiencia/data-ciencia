@@ -8,8 +8,12 @@
             cols="12"
             style="color: white"
           >
-            {{ new Date().getFullYear() }} — <strong>Data Ciencia</strong>
+            {{ new Date().getFullYear() }} — <strong>Observatorio de Cambio Climático</strong>
+            <br>
+            Ministerio de Ciencia, Tecnología, Conocimiento e Innovación
           </v-col>
+          <img src="https://www.minciencia.gob.cl/static/images/footer-detail-left.svg" style="position: absolute; ">
+          <img src="https://www.minciencia.gob.cl/static/images/footer-detail-right.svg" style="position: absolute; right: 0;">
     </v-footer>
   </div>
 </template>
